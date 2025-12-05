@@ -1,0 +1,6 @@
+2025-01-01 INFO System started
+2025-01-01 WARN Low disk space
+2025-01-01 INFO User login
+2025-01-01 ERROR Failed to load module
+2025-01-01 WARN CPU temperature high
+2025-01-01 ERROR Database connection lost
