@@ -1,6 +1,6 @@
-2025-01-01 INFO System started
-2025-01-01 WARN Low disk space
-2025-01-01 INFO User login
-2025-01-01 ERROR Failed to load module
-2025-01-01 WARN CPU temperature high
-2025-01-01 ERROR Database connection lost
+2025-01-01 10:00:00 [INFO] Application started
+2025-01-01 10:01:00 [WARN] Configuration file missing, using defaults
+2025-01-01 10:02:00 [INFO] User login: alice
+2025-01-01 10:03:00 [ERROR] Database connection failed
+2025-01-01 10:04:00 [INFO] Retrying connection
+2025-01-01 10:05:00 [ERROR] Database connection failed
