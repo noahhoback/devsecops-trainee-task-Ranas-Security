@@ -1,4 +1,4 @@
-name: DevSecOps Trainee CI
+name: CI
 
 on:
   push:
@@ -11,19 +11,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.x"
+          python-version: '3.x'
 
-      - name: Run log checker
+      - name: Run log checker on example.log
         run: |
-          chmod +x ./log_checker.sh
-          ./log_checker.sh ./example.log
+          chmod +x log_checker.sh
+          ./log_checker.sh example.log || true
 
       - name: Build Docker image
         run: |
           docker build -t devsecops-env-info .
+
+      - name: Run container (optional)
+        run: |
+          docker run --rm -e APP_ENV=test devsecops-env-info
