@@ -19,10 +19,10 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Run log checker on example.log
-        run: |
-          chmod +x log_checker.sh
-          ./log_checker.sh example.log || true
+       - name: Run log checker (fail on ERROR)
+         run: |
+    FAIL_ON_ERROR=1 ./log_checker.sh example.log
+
 
       - name: Build Docker image
         run: |
