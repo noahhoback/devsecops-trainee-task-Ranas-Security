@@ -1,26 +1,38 @@
-name: CI
+name: Build and Test
 
 on:
   push:
+    branches:
+      - main
   pull_request:
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    env:
+      FAIL_ON_ERROR: 1  # Ensure the pipeline fails if ERROR lines are found
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Make log checker executable
-        run: chmod +x log_checker.sh
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
 
-      - name: Run log checker (fail on ERROR)
-        run: |
-          FAIL_ON_ERROR=1 ./log_checker.sh example.log
+    - name: Make scripts executable
+      run: |
+        chmod +x log_checker.sh
+        chmod +x env_info.py
 
-      - name: Build Docker image
-        run: docker build -t devsecops-env-info .
+    - name: Test log_checker.sh
+      run: |
+        ./log_checker.sh example.log
+        echo "Exit code: $?"
 
-      - name: Run Docker container
-        run: docker run --rm -e APP_ENV=ci devsecops-env-info
+    - name: Build Docker image
+      run: docker build -t devsecops-env-info .
+
+    - name: Run Docker container
+      run: docker run --rm -e APP_ENV=test devsecops-env-info
